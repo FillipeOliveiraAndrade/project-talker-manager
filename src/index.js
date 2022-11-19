@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const { getAllPeoples } = require('./talkerManager');
+
 const app = express();
 app.use(bodyParser.json());
 
@@ -14,4 +16,10 @@ app.get('/', (_request, response) => {
 
 app.listen(PORT, () => {
   console.log('Online');
+});
+
+// Endpoints
+app.get('/talker', async (req, res) => {
+  const response = await getAllPeoples();
+  res.status(HTTP_OK_STATUS).json(response);
 });
