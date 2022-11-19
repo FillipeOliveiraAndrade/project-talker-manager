@@ -11,6 +11,19 @@ const getAllPeoples = async () => {
   }
 };
 
+const getPeopleById = async (id) => {
+  try {
+    const response = await getAllPeoples();
+    const people = response.find((item) => item.id === Number(id));
+    return people;
+  } catch (err) {
+    console.log(`Erro ao let o arquivo: ${err.message}`);
+  }
+};
+
+getPeopleById();
+
 module.exports = { 
   getAllPeoples,
+  getPeopleById,
 };
