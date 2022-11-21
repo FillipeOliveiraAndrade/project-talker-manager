@@ -44,6 +44,19 @@ app.post('/login', validateEmail, validatePassword, (req, res) => {
   res.status(HTTP_OK_STATUS).json({ token });
 });
 
+app.get('/talker/search', auth, async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    const response = await getAllPeoples();
+    return res.status(HTTP_OK_STATUS).json(response);
+  }
+
+  const talkers = await getAllPeoples();
+  const talker = talkers.filter((item) => item.name.includes(q));
+  res.status(200).json(talker);
+});
+
 app.get('/talker', async (req, res) => {
   const response = await getAllPeoples();
   res.status(HTTP_OK_STATUS).json(response);
@@ -104,8 +117,8 @@ app.put('/talker/:id',
 app.delete('/talker/:id', 
   auth,
   async (req, res) => {
-    const { id } = req.params;
+  const { id } = req.params;
     
-    await deleteTalker(id);
-    res.status(204).end();
-  });
+  await deleteTalker(id);
+  res.status(204).end();
+});
