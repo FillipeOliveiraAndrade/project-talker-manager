@@ -6,6 +6,7 @@ const {
   getAllPeoples,
   getPeopleById,
   addNewTalker,
+  editTalker,
 } = require('./talkerManager');
 
 const { 
@@ -74,4 +75,27 @@ app.post('/talker',
 
   await addNewTalker(talker);
   res.status(201).json(talker);
+});
+
+app.put('/talker/:id',
+  auth, 
+  validateName, 
+  validateAge,
+  validateTalk,
+  validateWatchedAt,
+  validateRate,
+  async (req, res) => {
+  const { id } = req.params;
+  const talker = req.body;
+  const talkers = await getAllPeoples();
+
+  const filterTalkerId = talkers.filter((item) => item.id !== Number(id));
+  const addTalker = {
+    id: Number(id),
+    ...talker,
+  };
+
+  filterTalkerId.push(addTalker);
+  await editTalker(filterTalkerId);
+  res.status(200).json(addTalker);
 });

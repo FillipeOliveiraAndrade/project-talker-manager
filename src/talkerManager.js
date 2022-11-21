@@ -31,8 +31,17 @@ const addNewTalker = async (talker) => {
   }
 };
 
+const editTalker = async (talker) => {
+  try {
+    return await fs.writeFile(path.resolve('src', 'talker.json'), JSON.stringify(talker));
+  } catch (err) {
+    console.log(`Erro ao ler o arquivo: ${err.message}`);
+  }
+};
+
 module.exports = { 
   getAllPeoples,
   getPeopleById,
   addNewTalker,
+  editTalker,
 };
