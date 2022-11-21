@@ -39,9 +39,21 @@ const editTalker = async (talker) => {
   }
 };
 
+const deleteTalker = async (id) => {
+  try {
+    const talkers = await getAllPeoples();
+    const talkerIndex = talkers.findIndex((item) => item.id === Number(id));
+    talkers.splice(talkerIndex, 1);
+    return await fs.writeFile(path.resolve('src', 'talker.json'), JSON.stringify(talkers));
+  } catch (err) {
+    console.log(`Erro ao ler o arquivo: ${err.message}`);
+  }
+};
+
 module.exports = { 
   getAllPeoples,
   getPeopleById,
   addNewTalker,
   editTalker,
+  deleteTalker,
 };

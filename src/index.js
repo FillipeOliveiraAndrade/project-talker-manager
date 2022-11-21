@@ -7,6 +7,7 @@ const {
   getPeopleById,
   addNewTalker,
   editTalker,
+  deleteTalker,
 } = require('./talkerManager');
 
 const { 
@@ -99,3 +100,12 @@ app.put('/talker/:id',
   await editTalker(filterTalkerId);
   res.status(200).json(addTalker);
 });
+
+app.delete('/talker/:id', 
+  auth,
+  async (req, res) => {
+    const { id } = req.params;
+    
+    await deleteTalker(id);
+    res.status(204).end();
+  });
